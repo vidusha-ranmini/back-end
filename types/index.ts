@@ -468,3 +468,21 @@ export interface NightCampWithDetails extends NightCamp {
     equipment: NightCampEquipment[];
     volunteering: NightCampVolunteering[];
 }
+
+export interface QuizQuestion {
+  question: string;
+  answers: string[];
+  correct_answer: string;
+  question_explanation?: string;
+}
+
+export interface CreateQuizRequest {
+  name: string;
+  category: string;
+  description: string;
+  time?: Date;
+  level: string;
+  time_limit: number;
+  user_id: number;
+  questions: QuizQuestion[];
+}
