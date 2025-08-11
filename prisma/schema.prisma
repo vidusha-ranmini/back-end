@@ -250,6 +250,8 @@ model users {
   role_upgrade_requests_role_upgrade_requests_user_idTousers                                   role_upgrade_requests[]                @relation("role_upgrade_requests_user_idTousers")
   subscriptions                                                                                subscriptions[]
   user_settings                                                                                user_settings?
+  Quizzes                                                                                      Quizzes[]                              @relation("UserCreatedQuizzes")
+  QuizParticipants                                                                             QuizParticipants[]
 
   @@index([is_active], map: "idx_users_active")
   @@index([email], map: "idx_users_email")
@@ -517,6 +519,50 @@ model influencer_application {
   @@index([user_id], map: "idx_influencer_application_user_id")
 }
 
+model Quizzes {
+  id                   Int              @id @default(autoincrement())
+  name                 String
+  category             String
+  description          String
+  time                 DateTime?        
+  question_count       Int              @default(0)
+  participants_count   Int              @default(0)
+  level                String
+  time_limit           Int               // in minutes
+  quiz_instructions    String?
+  user_id             Int              // Added this field
+  creator              users            @relation("UserCreatedQuizzes", fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  created_at           DateTime         @default(now())
+  modified_at          DateTime         @updatedAt
+  status               QuizStatus       @default(open)
+  quiz_open_time_duration Int?           // in minutes (optional)
+  questions            QuizQuestion[]
+  participants         QuizParticipants[]
+
+  @@index([user_id], map: "idx_quizzes_user_id")
+}
+
+model QuizQuestion {
+  id                  Int         @id @default(autoincrement())
+  quiz_id             Int
+  quiz                Quizzes     @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  question            String
+  answers             String[]    // array of possible answers
+  correct_answer      String
+  question_explanation String?
+}
+
+model QuizParticipants {
+  id                    Int        @id @default(autoincrement())
+  quiz_id               Int
+  user_id               Int
+  quiz                  Quizzes    @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  user                  users      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  correct_question_count Int       @default(0)
+  score                 Int       @default(0)
+}
+
+
 enum application_status {
   pending
   approved
@@ -583,3 +629,9 @@ enum user_role {
   mentor
   influencer
 }
+
+enum QuizStatus {
+  open
+  closed
+}
+

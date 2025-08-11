@@ -483,6 +483,41 @@ exports.Prisma.Influencer_applicationScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
+exports.Prisma.QuizzesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  category: 'category',
+  description: 'description',
+  time: 'time',
+  question_count: 'question_count',
+  participants_count: 'participants_count',
+  level: 'level',
+  time_limit: 'time_limit',
+  quiz_instructions: 'quiz_instructions',
+  user_id: 'user_id',
+  created_at: 'created_at',
+  modified_at: 'modified_at',
+  status: 'status',
+  quiz_open_time_duration: 'quiz_open_time_duration'
+};
+
+exports.Prisma.QuizQuestionScalarFieldEnum = {
+  id: 'id',
+  quiz_id: 'quiz_id',
+  question: 'question',
+  answers: 'answers',
+  correct_answer: 'correct_answer',
+  question_explanation: 'question_explanation'
+};
+
+exports.Prisma.QuizParticipantsScalarFieldEnum = {
+  id: 'id',
+  quiz_id: 'quiz_id',
+  user_id: 'user_id',
+  correct_question_count: 'correct_question_count',
+  score: 'score'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -566,6 +601,11 @@ exports.session_format = exports.$Enums.session_format = {
   Hybrid: 'Hybrid'
 };
 
+exports.QuizStatus = exports.$Enums.QuizStatus = {
+  open: 'open',
+  closed: 'closed'
+};
+
 exports.Prisma.ModelName = {
   subscriptions: 'subscriptions',
   blog_views: 'blog_views',
@@ -591,7 +631,10 @@ exports.Prisma.ModelName = {
   mentor_application: 'mentor_application',
   night_camp_volunteering_applications: 'night_camp_volunteering_applications',
   night_camp_registrations: 'night_camp_registrations',
-  influencer_application: 'influencer_application'
+  influencer_application: 'influencer_application',
+  Quizzes: 'Quizzes',
+  QuizQuestion: 'QuizQuestion',
+  QuizParticipants: 'QuizParticipants'
 };
 
 /**
